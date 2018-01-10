@@ -28,6 +28,7 @@
 #include "RenderPass\FancyRenderPass.h"
 #include "RenderPass\DebugRenderPass.h"
 #include "RenderPass\FogRenderPass.h"
+#include "RenderPass\GpuQueryRenderPass.h"
 #include <vector>
 
 #include "Utility\DebugDraw.h"
@@ -276,6 +277,8 @@ namespace Graphics
 
         TextureLoader::get().loadAll();
 
+        auto light_sort_query = new GpuQueryBegin();
+        auto fwd_query = new GpuQueryBegin();
 
 		renderPasses =
 		{
@@ -311,6 +314,7 @@ namespace Graphics
 				{*sun.getLightMatrixBuffer(), grassTimeBuffer },
 				shadowMap
 			),
+            light_sort_query,
 			newd LightCullRenderPass(
 				{},
 				{
@@ -326,8 +330,10 @@ namespace Graphics
 					lightOpaqueGridUAV
 				}
 			),
+            newd GpuQueryEnd(L"Forward+ Light Sorting", light_sort_query),
 			newd SkyBoxRenderPass({ fakeBuffers }, {}, { *sun.getGlobalLightBuffer() }, depthStencil, &sun),
-			newd ForwardPlusRenderPass(
+			fwd_query,
+            newd ForwardPlusRenderPass(
 				{
 					fakeBuffers,
 					m_BloomRTVMipChain[0]
@@ -353,7 +359,7 @@ namespace Graphics
 				},
 				depthStencil
 			),
-			newd FogRenderPass({fakeBuffers}, {depthStencil}, {}, nullptr),
+			//newd FogRenderPass({fakeBuffers}, {depthStencil}, {}, nullptr),
             newd ParticleRenderPass(
                 fakeBuffers,
                 lightOpaqueGridSRV, 
@@ -363,6 +369,8 @@ namespace Graphics
                 *sun.getGlobalLightBuffer(),
                 depthStencil
             ),
+            newd GpuQueryEnd(L"Forward Pass", fwd_query),
+
             newd GlowRenderPass(
                 m_BloomSRV,
                 m_BloomSRVMipChain,

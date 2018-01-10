@@ -86,6 +86,7 @@
     <ClInclude Include="include\RenderPass\AORenderPass.h" />
     <ClInclude Include="include\RenderPass\FancyRenderPass.h" />
     <ClInclude Include="include\RenderPass\FogRenderPass.h" />
+    <ClInclude Include="include\RenderPass\GpuQueryRenderPass.h" />
     <ClInclude Include="include\RenderPass\PostFXRenderPass.h" />
     <ClInclude Include="include\RenderPass\DepthOfFieldRenderPass.h" />
     <ClInclude Include="include\RenderPass\DepthRenderPass.h" />
@@ -121,7 +122,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{152B1F8B-2036-4BB0-A4F4-47CE682BA87A}</ProjectGuid>
     <RootNamespace>Graphics</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
