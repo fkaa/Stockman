@@ -36,7 +36,7 @@ Graphics::GUIRenderPass::~GUIRenderPass()
     }
 }
 
-void Graphics::GUIRenderPass::render() const
+void Graphics::GUIRenderPass::render() 
 {
     PROFILE_BEGIN("GUI");
     enum { TL, TR, BL, BR};

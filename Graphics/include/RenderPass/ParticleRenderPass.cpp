@@ -24,7 +24,7 @@ namespace Graphics {
     {
     }
 
-    void ParticleRenderPass::render() const
+    void ParticleRenderPass::render() 
     {
         FXSystem->render(Global::context,
             Global::mainCamera,
@@ -50,7 +50,7 @@ namespace Graphics {
 
     }
 
-    void ParticleDepthRenderPass::render() const
+    void ParticleDepthRenderPass::render() 
     {
         FXSystem->renderPrePass(Global::context, Global::mainCamera, depthStencil);
     }

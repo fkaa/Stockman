@@ -81,7 +81,7 @@ static DirectX::SimpleMath::Vector4 TransformScreen(DirectX::SimpleMath::Matrix 
     return pos;
 }
 
-void FancyRenderPass::render() const
+void FancyRenderPass::render() 
 {
     using namespace DirectX::SimpleMath;
 

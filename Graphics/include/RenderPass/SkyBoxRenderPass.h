@@ -31,7 +31,7 @@ namespace Graphics
             return L"SkyBoxRenderPass";
         }
 
-        virtual void render() const;
+        virtual void render() ;
         virtual void update(float deltaTime);
 
     private:

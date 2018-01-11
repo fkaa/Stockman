@@ -102,7 +102,7 @@ void Graphics::SnowRenderPass::update(float deltaTime)
 
 }
 
-void Graphics::SnowRenderPass::render() const
+void Graphics::SnowRenderPass::render() 
 {
     if (snowFlakeCount > 0 && enabled)
     {

@@ -64,7 +64,7 @@ namespace Graphics
         m_ConstantsBuffer.write(Global::context, &m_Constants, sizeof(m_Constants));
     }
 
-    void PostFXRenderPass::render() const
+    void PostFXRenderPass::render() 
     {
         
         backBuffers->swap();

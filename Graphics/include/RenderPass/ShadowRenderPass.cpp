@@ -26,7 +26,7 @@ namespace Graphics
     {
     }
 
-    void ShadowRenderPass::render() const
+    void ShadowRenderPass::render() 
     {
         PROFILE_BEGIN("Shadow");
         Global::context->OMSetDepthStencilState(Global::cStates->DepthDefault(), 0);

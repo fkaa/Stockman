@@ -14,7 +14,7 @@ namespace Graphics
             return L"ParticleDepthRenderPass";
         }
 
-        virtual void render() const override;
+        virtual void render() override;
         virtual void update(float deltaTime) override;
     };
 
@@ -35,7 +35,7 @@ namespace Graphics
             return L"ParticleRenderPass";
         }
 
-        virtual void render() const override;
+        virtual void render() override;
         virtual void update(float deltaTime) override;
     private:
         ID3D11RenderTargetView *m_Output;

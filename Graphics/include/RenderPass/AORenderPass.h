@@ -24,7 +24,7 @@ namespace Graphics
         }
 
         void pass(int pass) const;
-        void render() const;
+        void render();
         void update(float deltaTime);
 
     private:

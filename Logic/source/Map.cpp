@@ -57,10 +57,10 @@ Map::Map() :
 
     // static map lights
     #define MAP_PATH(map) Resources::Maps::Paths.at(Resources::Maps::map)
-    FillLightVec(m_MapLights, MAP_PATH(lights));
-    FillLightVec(m_RedBulbs,  MAP_PATH(r));
-    FillLightVec(m_GreenBulbs,MAP_PATH(g));
-    FillLightVec(m_BlueBulbs, MAP_PATH(b));
+    //FillLightVec(m_MapLights, MAP_PATH(lights));
+    //FillLightVec(m_RedBulbs,  MAP_PATH(r));
+    //FillLightVec(m_GreenBulbs,MAP_PATH(g));
+    //FillLightVec(m_BlueBulbs, MAP_PATH(b));
 
     //                                       bgr
     m_ChristmasLightPattern.push_back(0b00000000);

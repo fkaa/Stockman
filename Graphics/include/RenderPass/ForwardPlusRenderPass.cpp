@@ -16,7 +16,7 @@ namespace Graphics
     {
     }
 
-    void ForwardPlusRenderPass::render() const
+    void ForwardPlusRenderPass::render() 
     {
         PROFILE_BEGIN("Forward Plus");
         Global::context->PSSetShader(forward_plus_ps, nullptr, 0);

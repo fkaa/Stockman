@@ -21,7 +21,7 @@ namespace Graphics
         }
 
         void update(float deltaTime);
-        void render() const;
+        void render() ;
 
 
     private:

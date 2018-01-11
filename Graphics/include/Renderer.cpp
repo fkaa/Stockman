@@ -42,6 +42,41 @@
 
 namespace Graphics
 {
+    std::vector<LightRenderInfo> m_TestLights;
+    GpuQueryEnd *m_LightSortQuery;
+    GpuQueryEnd *m_ForwardQuery;
+    std::vector<float> m_SortTimings;
+    std::vector<float> m_ForwardTimings;
+    bool Active = false;
+
+    void AddRandomLight()
+    {
+        LightRenderInfo info = {};
+        info.color = DirectX::Colors::AliceBlue;
+        info.intensity = 1;
+        info.range = RandomFloat(5.f, 20.f);
+        info.position = DirectX::SimpleMath::Vector3 { RandomFloat(-140, 140), RandomFloat(0, 5), RandomFloat(-140, 140) };
+
+        m_TestLights.push_back(info);
+    }
+
+    void AddTiming()
+    {
+        m_SortTimings.push_back(m_LightSortQuery->GetAverage());
+        m_ForwardTimings.push_back(m_ForwardQuery->GetAverage());
+    }
+
+    void PrintTimings()
+    {
+        printf("Light Sort:\n");
+        for (auto t : m_SortTimings)
+            printf("%f\n", t);
+
+        printf("Forward Pass:\n");
+        for (auto t : m_ForwardTimings)
+            printf("%f\n", t);
+    }
+
     uint32_t zero = 0;
     Renderer::Renderer(
         ID3D11Device * device,
@@ -80,6 +115,8 @@ namespace Graphics
 
 #pragma region CaNCeR!
     {
+        srand(234234);
+
         grassTime = 0;
         Global::cStates = newd CommonStates(device);
         Global::comparisonSampler = [&]() {
@@ -277,8 +314,27 @@ namespace Graphics
 
         TextureLoader::get().loadAll();
 
+        DebugWindow::getInstance()->registerCommand("TEST_START", [&](std::vector<std::string> &args)->std::string
+        {
+            Active = true;
+
+            return "testing";
+        });
+
+        DebugWindow::getInstance()->registerCommand("TEST_PRINT", [&](std::vector<std::string> &args)->std::string
+        {
+            PrintTimings();
+
+            return "printed";
+        });
+
         auto light_sort_query = new GpuQueryBegin();
+        auto light_sort_query_end = new GpuQueryEnd(L"Light Sort", light_sort_query);
         auto fwd_query = new GpuQueryBegin();
+        auto fwd_query_end = new GpuQueryEnd(L"Forward Pass", fwd_query);
+
+        m_ForwardQuery = fwd_query_end;
+        m_LightSortQuery = light_sort_query_end;
 
 		renderPasses =
 		{
@@ -330,7 +386,7 @@ namespace Graphics
 					lightOpaqueGridUAV
 				}
 			),
-            newd GpuQueryEnd(L"Forward+ Light Sorting", light_sort_query),
+            light_sort_query_end,
 			newd SkyBoxRenderPass({ fakeBuffers }, {}, { *sun.getGlobalLightBuffer() }, depthStencil, &sun),
 			fwd_query,
             newd ForwardPlusRenderPass(
@@ -369,7 +425,7 @@ namespace Graphics
                 *sun.getGlobalLightBuffer(),
                 depthStencil
             ),
-            newd GpuQueryEnd(L"Forward Pass", fwd_query),
+            fwd_query_end,
 
             newd GlowRenderPass(
                 m_BloomSRV,
@@ -445,8 +501,34 @@ namespace Graphics
         ModelLoader::get().unloadAll();
     }
 
+    int timer = 200;
+    int limit = 200;
+    int counter = 0;
+
     void Renderer::update(float deltaTime)
     {
+        if (Active) {
+            for (auto info : m_TestLights)
+                QueueRender(info);
+
+            timer--;
+            if (timer <= 0 && counter < limit) {
+                printf("#%d...\n", counter);
+                AddTiming();
+                AddRandomLight();
+
+                timer += 100;
+                counter++;
+
+                if (counter == limit) {
+                    printf("finished.\n", counter);
+                }
+            }
+        }
+
+
+
+
         grassTime += deltaTime;
         grassTimeBuffer.write(Global::context, &grassTime, sizeof(grassTime));
         

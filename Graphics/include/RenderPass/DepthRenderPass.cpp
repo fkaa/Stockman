@@ -16,7 +16,7 @@ namespace Graphics
     {
     }
 
-    void DepthRenderPass::render() const
+    void DepthRenderPass::render()
     {
         PROFILE_BEGIN("Depth Pass");
         Global::context->OMSetDepthStencilState(Global::cStates->DepthDefault(), 0);

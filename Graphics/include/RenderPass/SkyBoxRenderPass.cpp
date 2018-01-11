@@ -48,7 +48,7 @@ namespace Graphics
         SAFE_RELEASE(m_MoonTexture)
     }
 
-    void SkyBoxRenderPass::render() const
+    void SkyBoxRenderPass::render() 
     {
         auto cxt = Global::context;
 

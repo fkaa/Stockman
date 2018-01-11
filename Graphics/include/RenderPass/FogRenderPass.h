@@ -14,7 +14,7 @@ namespace Graphics {
 			ID3D11DepthStencilView * depthStencil = nullptr);
 
 		// Inherited via RenderPass
-		virtual void render() const override;
+		virtual void render() override;
 		virtual void update(float deltaTime) override;
 		virtual wchar_t * name() const override;
 	private:

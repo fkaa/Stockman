@@ -15,7 +15,7 @@ Graphics::FogRenderPass::FogRenderPass(std::initializer_list<ID3D11RenderTargetV
 	});
 }
 
-void Graphics::FogRenderPass::render() const
+void Graphics::FogRenderPass::render() 
 {
 	if (enabled)
 	{

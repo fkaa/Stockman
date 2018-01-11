@@ -60,7 +60,7 @@ namespace Graphics
     {
     }
 
-    void GlowRenderPass::render() const
+    void GlowRenderPass::render() 
     {
         if (!enabled)
             return;

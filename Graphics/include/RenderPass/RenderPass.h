@@ -23,7 +23,7 @@ namespace Graphics
         );
         virtual ~RenderPass() {};
 
-        virtual void render() const = 0;
+        virtual void render() = 0;
         virtual void update(float deltaTime) = 0;
 
         virtual wchar_t *name() const = 0;

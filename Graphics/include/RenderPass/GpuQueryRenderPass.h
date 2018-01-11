@@ -27,7 +27,7 @@ namespace Graphics
         }
 
         void update(float deltaTime) {}
-        void render() const {
+        void render() {
             Global::context->Begin(m_DisjointQuery);
             Global::context->End(m_StartQuery);
         }
@@ -43,7 +43,9 @@ namespace Graphics
         GpuQueryEnd(wchar_t *name, GpuQueryBegin *query)
             : RenderPass({}, {}, {}, nullptr),
             m_Name(name),
-            m_Query(query)
+            m_Query(query),
+            m_History(),
+            m_Cursor(0)
         {
         }
 
@@ -54,7 +56,7 @@ namespace Graphics
         }
 
         void update(float deltaTime) {}
-        void render() const {
+        void render() {
             auto cxt = Global::context;
 
             cxt->End(m_Query->m_EndQuery);
@@ -75,17 +77,38 @@ namespace Graphics
                 UINT64 delta = endTime - startTime;
                 float frequency = static_cast<float>(disjointData.Frequency);
                 time = (delta / frequency) * 1000.0f;
+
+                m_History[m_Cursor] = time;
+
+                m_Cursor++;
+                if (m_Cursor >= 60) {
+                    m_Cursor = 0;
+                }
             }
 
-            std::wstring name(m_Name);
-            std::wcout << name;
 
-            printf(": %f\n", time);
+            float avg = 0.f;
+            for (int i = 0; i < 60; i++) {
+                avg += m_History[i];
+            }
+            avg /= 60.f;
+
+        }
+
+        float GetAverage() const {
+            float avg = 0.f;
+            for (int i = 0; i < 60; i++) {
+                avg += m_History[i];
+            }
+            avg /= 60.f;
+            
+            return avg;
         }
 
     private:
         GpuQueryBegin *m_Query;
         wchar_t *m_Name;
         float m_History[60];
+        int m_Cursor;
     };
 }

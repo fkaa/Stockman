@@ -175,7 +175,7 @@ static bool SSAOEnabled = true;
         m_ConstantsBuffer.write(Global::context, &constants, sizeof(constants));
     }
 
-    void AORenderPass::render() const
+    void AORenderPass::render() 
     {
         if (!SSAOEnabled) return;
 

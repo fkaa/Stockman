@@ -13,7 +13,7 @@ Graphics::LightCullRenderPass::LightCullRenderPass(
     lightGrid.initialize();
 }
 
-void Graphics::LightCullRenderPass::render() const
+void Graphics::LightCullRenderPass::render() 
 {
     PROFILE_BEGIN("Light Cull");
     Global::context->OMSetRenderTargets(0, nullptr, nullptr);
