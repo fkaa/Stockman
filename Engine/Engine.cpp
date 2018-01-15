@@ -465,7 +465,14 @@ int Engine::run()
 
         //static Graphics::ParticleEffect fire = Graphics::FXSystem->getEffect("FireSmoke");
         //Graphics::FXSystem->processEffect(&fire, DirectX::XMMatrixTranslation(3, 0, 3), deltaTime / 1000.f);		          
-
+        static int deCam = 0;
+        if (mTracker->pressed.C) {
+            deCam++;
+            DebugWindow::getInstance()->addLog("#%d\n", deCam);
+            auto fwd = Global::mainCamera->getForward();
+            auto pos = Global::mainCamera->getPos();
+            printf("{ { %.3f, %.3f, %.3f }, { %.3f, %.3f, %.3f } },\n", pos.x, pos.y, pos.z, fwd.x, fwd.y, fwd.z);
+        }
 		if (mTracker->pressed.F2)
 		{
 			g_Profiler->capture();

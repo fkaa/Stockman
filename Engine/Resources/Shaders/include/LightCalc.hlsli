@@ -151,6 +151,12 @@ float3 calcAllLights(float4 ndcPosition, float3 position, float3 normal, float3 
     {
         lightSum += calcLight(lights[lightIndexList[offset + i]], position, normal, viewDir, specularExponent);
     }
+    
+    /*for (uint i = 0; i < 256; i++)
+    {
+        if (lights[i].range == 0) break;
+        lightSum += calcLight(lights[i], position, normal, viewDir, specularExponent);
+    }*/
 
     return lightSum;
 }

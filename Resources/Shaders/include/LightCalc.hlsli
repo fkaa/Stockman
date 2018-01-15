@@ -144,12 +144,11 @@ float3 calcAllLights(float4 ndcPosition, float3 position, float3 normal, float3 
 {
     float3 lightSum = float3(0, 0, 0);
 
-    uint2 tile = uint2(floor(ndcPosition.xy / BLOCK_SIZE));
-    uint offset = lightGrid[tile].x;
-    uint count = lightGrid[tile].y;
-    for (uint i = 0; i < count; i++)
+    for (uint i = 0; i < 256; i++)
     {
-        lightSum += calcLight(lights[lightIndexList[offset + i]], position, normal, viewDir, specularExponent);
+        Light light = lights[i];
+        if (light.range == 0) break;
+        lightSum += calcLight(light, position, normal, viewDir, specularExponent);
     }
 
     return lightSum;
